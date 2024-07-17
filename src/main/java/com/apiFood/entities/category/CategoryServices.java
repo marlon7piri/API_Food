@@ -1,6 +1,8 @@
 package com.apiFood.entities.category;
 
 
+import com.apiFood.entities.product.Product;
+import com.apiFood.entities.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -21,6 +21,8 @@ public class CategoryServices {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
 
     public List<Category> getAllCategoryServices(){
@@ -28,23 +30,27 @@ public class CategoryServices {
     }
 
     public Category createCategoryServices(Category category){
+
+
+
         return categoryRepository.save(category);
     }
 
-    public ResponseEntity<Optional> getCategoryByIdServices(Long categoryID) {
-        Optional categoryFound = categoryRepository.findById(categoryID);
+    public Optional<Category> getCategoryByIdServices(Long categoryID) {
+        Optional<Category> categoryFound = categoryRepository.findById(categoryID);
 
-
-        return new ResponseEntity<>(categoryFound, HttpStatus.OK);
+         return categoryFound;
     }
 
-    public ResponseEntity<Object> deleteCategoryServices(Long idcategory){
-        categoryRepository.deleteById(idcategory);
+    public ResponseEntity<Object> deleteCategoryServices(Long idCategory){
+        categoryRepository.deleteById(idCategory);
 
         request.put("message","Deleted succes!");
 
         return new ResponseEntity<>(request,HttpStatus.OK);
     }
+    
+
 
 
     }
